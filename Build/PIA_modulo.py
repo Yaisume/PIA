@@ -45,7 +45,54 @@ areas=main_areas(lista_datos)
 analisis_areas(areas)
 
 
+def frecuencia_idiomas (lista_datos): #Definimos la función
 
+	from collections import Counter		#Importamos Counter para sacar la frecuencia
+	import matplotlib.pyplot as plt 	#Importamos matplotlib
+
+
+	#Sacamos la frecuencia de idiomas hablados en el continente americano
+	frecuencia_idiomas=Counter(lenguajes)	
+	for pais in lista_datos:
+		frecuencia_idiomas.update(pais["Lenguajes"])	#Cuenta los países que coinciden en el idioma
+	for idioma, count in frecuencia_idiomas.most_common():
+		print(f"{idioma}: {count}")	#Muestra los datos obtenidos
+ 
+ 
+	#Realizamos gráfica de barras con matplotlib
+	etiquetas = ["Español","Inglés","Guaraní","Francés","Aymara","Quechua","Criollo Haitiano","Criollo Beliceño","Holandés","Dialecto Jamaiquino","Portugés"] 
+	valores = [19, 15, 3, 2, 2, 2, 1, 1, 1, 1, 1] 
+	plt.bar(etiquetas, valores, color='purple') 
+	plt.title("Frecuencia de idiomas en América") 
+	plt.show()	#Muestra la grafica
+
+
+def porcentaje_idiomas(lista_datos):	#Definimos la función
+	
+	from collections import Counter		#Importamos Counter para sacar la frecuencia
+	import matplotlib.pyplot as plt 	#Importamos matplotlib
+	#No usamos la la función frecuencia_idiomas ya que no queremos saturar al imprimir los datos ni hacer la gráfica	
+
+	frecuencia_idiomas=Counter(lenguajes)	#Cuenta los países que coinciden en el idioma
+	for pais in lista_datos:
+		frecuencia_idiomas.update(pais["Lenguajes"])
+
+	#Sacamos porcentajes
+	total_paises=len(datos)
+	porcentajes = {idioma: (count / total_paises) * 100
+		for idioma, count in frecuencia_idiomas.most_common()
+	}
+	print("Porcentaje de idiomas en América (por países)")
+	for idioma, porcentaje in porcentajes.items():
+    		print(f"{idioma}: {porcentaje:.2f}%")	#Imprimimos los datos
+
+	#Realizamos gráfica de pastel
+	idiomas= list(porcentajes.keys()) 
+	valores = list(porcentajes.values()) 
+	plt.pie(valores, labels=idiomas, autopct='%1.1f%%') 
+	plt.title("Porcentaje de idiomas hablados en el continente americano") 
+	plt.axis('equal') 
+	plt.show() 	#Muestra la gráfica
 
 
 
